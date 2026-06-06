@@ -1,0 +1,34 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+#about,
+#menu,
+#why,
+#gallery,
+#reviews,
+#visit {
+  scroll-margin-top: 96px;
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 84px;
+  }
+
+  #about,
+  #menu,
+  #why,
+  #gallery,
+  #reviews,
+  #visit {
+    scroll-margin-top: 84px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
