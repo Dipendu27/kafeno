@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Gantari:wght@300;400;500;600&family=Great+Vibes&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Gantari", "Inter", sans-serif;
+  --font-cursive: "Great Vibes", cursive;
+  
+  --color-brand-cream: #F3F6FA;
+  --color-brand-paper: #EBF1F7;
+  --color-brand-dark: #0E1B29;
+  --color-brand-charcoal: #192A3E;
+  --color-brand-brown: #2B1A12;
+  --color-brand-gold: #D69E2E;
+  --color-brand-sage: #6A4634;
+  --color-brand-sand: #CCD6E0;
+}
+
+/* Custom CSS classes for Kafeno styling */
+.checkerboard-bar {
+  background-image: linear-gradient(45deg, #2B1A12 25%, transparent 25%),
+                    linear-gradient(-45deg, #2B1A12 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, #2B1A12 75%),
+                    linear-gradient(-45deg, transparent 75%, #2B1A12 75%);
+  background-size: 24px 24px;
+  background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
+  background-color: #F3F6FA;
+  opacity: 0.85;
+}
+
+body {
+  background-color: #F3F6FA;
+  color: #0E1B29;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F3F6FA;
+}
+::-webkit-scrollbar-thumb {
+  background: #2B1A12;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #805E41;
+}
+
+.scrollbar-transparent-track::-webkit-scrollbar-track {
+  background: transparent !important;
+}

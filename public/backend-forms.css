@@ -1,0 +1,228 @@
+.backend-form-section {
+  position: relative;
+  overflow: hidden;
+  padding: 9rem 1.5rem 6rem;
+  background:
+    radial-gradient(circle at 85% 12%, hsl(21 41% 20% / 0.1), transparent 28rem),
+    radial-gradient(circle at 5% 88%, hsl(207 36% 28% / 0.12), transparent 24rem),
+    linear-gradient(180deg, hsl(36 36% 95%) 0%, hsl(36 30% 90%) 100%);
+}
+
+.backend-form-shell {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1.1fr);
+  gap: 3rem;
+  align-items: start;
+}
+
+.backend-form-copy {
+  padding-top: 1.5rem;
+}
+
+.backend-back-link,
+.backend-eyebrow,
+.backend-field span,
+.backend-help {
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+}
+
+.backend-back-link {
+  display: inline-flex;
+  align-items: center;
+  color: hsl(207 36% 28% / 0.86);
+  border: 1px solid hsl(36 18% 82%);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.7rem;
+  text-decoration: none;
+  transition: 180ms ease;
+}
+
+.backend-back-link:hover {
+  color: hsl(215 65% 17%);
+  border-color: hsl(215 65% 17% / 0.3);
+}
+
+.backend-eyebrow {
+  margin-top: 3rem;
+  color: hsl(207 36% 28% / 0.8);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.backend-form-copy h1 {
+  margin-top: 1rem;
+  color: hsl(215 65% 17%);
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(3rem, 8vw, 5.75rem);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+
+.backend-form-copy em {
+  color: hsl(21 41% 20%);
+  font-style: normal;
+}
+
+.backend-form-copy p {
+  margin-top: 1.5rem;
+  max-width: 34rem;
+  color: hsl(215 25% 30%);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.backend-contact-strip {
+  margin-top: 2rem;
+  display: grid;
+  gap: 0.75rem;
+  color: hsl(215 65% 17%);
+  font-size: 0.95rem;
+}
+
+.backend-card {
+  border: 1px solid hsl(36 18% 82%);
+  border-radius: 1.5rem;
+  background: hsl(0 0% 100% / 0.72);
+  box-shadow: 0 30px 60px -30px hsl(215 65% 17% / 0.25);
+  backdrop-filter: blur(18px);
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+}
+
+.backend-card h2 {
+  color: hsl(215 65% 17%);
+  font-family: Fraunces, Georgia, serif;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.12;
+}
+
+.backend-form-grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.backend-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.backend-field-full {
+  grid-column: 1 / -1;
+}
+
+.backend-field span {
+  color: hsl(207 36% 28% / 0.85);
+  font-size: 0.66rem;
+  font-weight: 600;
+}
+
+.backend-field input,
+.backend-field select,
+.backend-field textarea {
+  width: 100%;
+  border: 1px solid hsl(36 18% 82%);
+  border-radius: 0.85rem;
+  background: hsl(36 36% 96% / 0.78);
+  color: hsl(215 65% 17%);
+  font: inherit;
+  padding: 0.9rem 1rem;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.backend-field textarea {
+  min-height: 8.5rem;
+  resize: vertical;
+}
+
+.backend-field input:focus,
+.backend-field select:focus,
+.backend-field textarea:focus {
+  border-color: hsl(215 65% 17% / 0.45);
+  background: white;
+  box-shadow: 0 0 0 4px hsl(215 65% 17% / 0.08);
+}
+
+.backend-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.backend-submit {
+  min-height: 3rem;
+  border: 0;
+  border-radius: 999px;
+  background: hsl(21 41% 20%);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0 1.6rem;
+  transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+}
+
+.backend-submit:hover {
+  box-shadow: 0 16px 30px -18px hsl(21 41% 20% / 0.8);
+  transform: translateY(-1px);
+}
+
+.backend-submit:disabled {
+  cursor: wait;
+  opacity: 0.6;
+  transform: none;
+}
+
+.backend-status {
+  color: hsl(215 25% 30%);
+  font-size: 0.9rem;
+}
+
+.backend-status[data-tone="success"] {
+  color: #116c43;
+}
+
+.backend-status[data-tone="error"] {
+  color: #9d1d1d;
+}
+
+.backend-help {
+  margin-top: 1rem;
+  color: hsl(207 36% 28% / 0.78);
+  font-size: 0.65rem;
+  line-height: 1.8;
+}
+
+@media (max-width: 860px) {
+  .backend-form-section {
+    padding-top: 7rem;
+  }
+
+  .backend-form-shell {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .backend-form-copy {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .backend-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .backend-form-copy h1 {
+    font-size: clamp(2.6rem, 16vw, 4rem);
+  }
+}
