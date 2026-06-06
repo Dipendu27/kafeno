@@ -4,6 +4,8 @@
   const pendingHashKey = 'kafenoPendingHash';
   const nativeScrollTo = window.scrollTo.bind(window);
   let suppressTopResetUntil = 0;
+  let scrollLockTimer = null;
+  let previousBodyMinHeight = '';
 
   const samePath = (a, b) => {
     const clean = (path) => path.replace(/\/+$/, '') || '/';
@@ -26,6 +28,31 @@
 
   const suppressTopReset = () => {
     suppressTopResetUntil = Date.now() + 1800;
+  };
+
+  const lockScrollHeight = () => {
+    if (scrollLockTimer) {
+      window.clearTimeout(scrollLockTimer);
+      scrollLockTimer = null;
+    }
+
+    previousBodyMinHeight = document.body.style.minHeight;
+    const minHeight = Math.max(document.body.scrollHeight, window.scrollY + window.innerHeight + 240);
+    document.body.style.minHeight = `${Math.ceil(minHeight)}px`;
+  };
+
+  const unlockScrollHeight = () => {
+    if (scrollLockTimer) {
+      window.clearTimeout(scrollLockTimer);
+      scrollLockTimer = null;
+    }
+
+    document.body.style.minHeight = previousBodyMinHeight;
+  };
+
+  const scheduleScrollUnlock = () => {
+    if (scrollLockTimer) window.clearTimeout(scrollLockTimer);
+    scrollLockTimer = window.setTimeout(unlockScrollHeight, 1500);
   };
 
   const getHeaderOffset = () => {
@@ -83,10 +110,15 @@
   const waitForHash = (hash, attemptsLeft) => {
     if (scrollToHash(hash)) {
       sessionStorage.removeItem(pendingHashKey);
+      scheduleScrollUnlock();
       return;
     }
 
-    if (attemptsLeft <= 0) return;
+    if (attemptsLeft <= 0) {
+      scheduleScrollUnlock();
+      return;
+    }
+
     window.setTimeout(() => waitForHash(hash, attemptsLeft - 1), 80);
   };
 
@@ -114,6 +146,7 @@
       if (isSamePageTarget && scrollToHash(url.hash)) return;
 
       sessionStorage.setItem(pendingHashKey, url.hash);
+      lockScrollHeight();
       history.pushState(null, '', `${homePath}${url.hash}`);
       const routeEvent =
         typeof PopStateEvent === 'function' ? new PopStateEvent('popstate') : new Event('popstate');
