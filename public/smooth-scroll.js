@@ -2,10 +2,30 @@
   const homePath = '/';
   const sectionHashes = new Set(['#about', '#menu', '#why', '#gallery', '#reviews', '#visit']);
   const pendingHashKey = 'kafenoPendingHash';
+  const nativeScrollTo = window.scrollTo.bind(window);
+  let suppressTopResetUntil = 0;
 
   const samePath = (a, b) => {
     const clean = (path) => path.replace(/\/+$/, '') || '/';
     return clean(a) === clean(b);
+  };
+
+  const isTopReset = (args) => {
+    const [first, second] = args;
+    if (typeof first === 'object' && first !== null) {
+      return Number(first.top || 0) === 0 && Number(first.left || 0) === 0;
+    }
+
+    return Number(first || 0) === 0 && Number(second || 0) === 0;
+  };
+
+  window.scrollTo = (...args) => {
+    if (Date.now() < suppressTopResetUntil && isTopReset(args)) return;
+    nativeScrollTo(...args);
+  };
+
+  const suppressTopReset = () => {
+    suppressTopResetUntil = Date.now() + 1800;
   };
 
   const getHeaderOffset = () => {
@@ -25,7 +45,7 @@
 
   const animateTo = (targetY) => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      window.scrollTo(0, targetY);
+      nativeScrollTo(0, targetY);
       return;
     }
 
@@ -37,7 +57,7 @@
     const step = (time) => {
       if (startTime === null) startTime = time;
       const progress = Math.min(1, (time - startTime) / duration);
-      window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+      nativeScrollTo(0, startY + distance * easeInOutCubic(progress));
 
       if (progress < 1) {
         window.requestAnimationFrame(step);
@@ -52,20 +72,21 @@
     return document.getElementById(decodeURIComponent(hash.slice(1)));
   };
 
-  const scrollToHash = (hash, updateUrl) => {
+  const scrollToHash = (hash) => {
     const target = findTarget(hash);
     if (!target) return false;
-
-    if (updateUrl) {
-      history.pushState(null, '', hash);
-    }
 
     animateTo(getTargetTop(target));
     return true;
   };
 
   const waitForHash = (hash, attemptsLeft) => {
-    if (scrollToHash(hash, false) || attemptsLeft <= 0) return;
+    if (scrollToHash(hash)) {
+      sessionStorage.removeItem(pendingHashKey);
+      return;
+    }
+
+    if (attemptsLeft <= 0) return;
     window.setTimeout(() => waitForHash(hash, attemptsLeft - 1), 80);
   };
 
@@ -84,11 +105,20 @@
 
       event.preventDefault();
       event.stopPropagation();
+      if (typeof event.stopImmediatePropagation === 'function') {
+        event.stopImmediatePropagation();
+      }
 
-      if (isSamePageTarget && scrollToHash(url.hash, true)) return;
+      suppressTopReset();
+
+      if (isSamePageTarget && scrollToHash(url.hash)) return;
 
       sessionStorage.setItem(pendingHashKey, url.hash);
-      window.location.assign(`${homePath}${url.hash}`);
+      history.pushState(null, '', `${homePath}${url.hash}`);
+      const routeEvent =
+        typeof PopStateEvent === 'function' ? new PopStateEvent('popstate') : new Event('popstate');
+      window.dispatchEvent(routeEvent);
+      waitForHash(url.hash, 25);
     },
     true,
   );
@@ -97,11 +127,13 @@
     const pendingHash = sessionStorage.getItem(pendingHashKey);
     if (pendingHash) {
       sessionStorage.removeItem(pendingHashKey);
+      suppressTopReset();
       waitForHash(pendingHash, 25);
       return;
     }
 
     if (sectionHashes.has(window.location.hash)) {
+      suppressTopReset();
       waitForHash(window.location.hash, 25);
     }
   });
