@@ -630,10 +630,152 @@ header nav a[href="/takeaway"] {
   transform: none;
 }
 
+.glass-mode-switch {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 90;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid hsl(var(--cream) / 0.28);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 12%), hsl(0 0% 100% / 0.34), transparent 34%),
+    linear-gradient(135deg, hsl(214 38% 16% / 0.56), hsl(21 45% 20% / 0.3));
+  box-shadow: var(--ios-control-shadow);
+  backdrop-filter: var(--ios-glass-blur);
+  -webkit-backdrop-filter: var(--ios-glass-blur);
+  transform: translateZ(0);
+}
+
+.glass-mode-switch::after {
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, hsl(0 0% 100% / 0.26), transparent 34%),
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 12%), hsl(0 0% 100% / 0.22), transparent 36%);
+  content: "";
+  pointer-events: none;
+}
+
+.glass-mode-option {
+  position: relative;
+  z-index: 1;
+  min-width: 4.45rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: hsl(var(--cream) / 0.72);
+  font-size: 0.78rem;
+  font-weight: 700;
+  outline: none;
+  transition:
+    background-color 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass-mode-option:hover {
+  color: hsl(var(--cream));
+}
+
+.glass-mode-option:focus-visible {
+  outline: 1px solid hsl(var(--cream) / 0.68);
+  outline-offset: 0.12rem;
+}
+
+.glass-mode-option[data-active="true"] {
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 12%), hsl(0 0% 100% / 0.34), transparent 34%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.22), hsl(21 45% 20% / 0.4));
+  color: hsl(var(--cream));
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.34), 0 10px 24px -18px hsl(0 0% 0% / 0.76);
+}
+
+body[data-glass-mode="clear"] {
+  --ios-glass-blur: blur(38px) saturate(1.86) contrast(1.03);
+  --ios-glass-shadow: 0 30px 90px -56px hsl(214 38% 16% / 0.78), inset 0 1px 0 hsl(0 0% 100% / 0.68), inset 0 -1px 0 hsl(214 38% 16% / 0.12);
+  --ios-control-shadow: 0 18px 48px -32px hsl(214 38% 16% / 0.7), inset 0 1px 0 hsl(0 0% 100% / 0.56), inset 0 -1px 0 hsl(214 38% 16% / 0.1);
+}
+
+body[data-glass-mode="clear"] header {
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 0%), hsl(0 0% 100% / 0.42), transparent 34%),
+    linear-gradient(135deg, hsl(214 38% 16% / 0.34), hsl(0 0% 100% / 0.1) 46%, hsl(21 45% 20% / 0.2)) !important;
+  border-color: hsl(0 0% 100% / 0.36);
+}
+
+body[data-glass-mode="clear"][data-glass-scrolled="true"] header {
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 0%), hsl(0 0% 100% / 0.36), transparent 34%),
+    linear-gradient(135deg, hsl(214 38% 16% / 0.46), hsl(0 0% 100% / 0.12) 46%, hsl(21 45% 20% / 0.24)) !important;
+}
+
+body[data-glass-mode="clear"] header nav a,
+body[data-glass-mode="clear"] header nav a[href="/takeaway"] {
+  color: hsl(var(--cream) / 0.96) !important;
+  text-shadow: 0 2px 18px hsl(214 38% 16% / 0.62);
+}
+
+body[data-glass-mode="clear"] header a[href="/reserve"],
+body[data-glass-mode="clear"] main section a.rounded-full,
+body[data-glass-mode="clear"] main section button.rounded-full,
+body[data-glass-mode="clear"] footer a[href="/reserve"],
+body[data-glass-mode="clear"] footer a[href="/takeaway"],
+body[data-glass-mode="clear"] footer a[aria-label="Social link"],
+body[data-glass-mode="clear"] .backend-submit,
+body[data-glass-mode="clear"] .glass-mode-switch {
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 12%), hsl(0 0% 100% / 0.44), transparent 34%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.2), hsl(0 0% 100% / 0.08) 46%, hsl(214 38% 16% / 0.28)),
+    hsl(214 38% 16% / 0.34) !important;
+  border-color: hsl(0 0% 100% / 0.42) !important;
+}
+
+body[data-glass-mode="clear"] .bg-card,
+body[data-glass-mode="clear"] [class*="bg-card/"],
+body[data-glass-mode="clear"] article,
+body[data-glass-mode="clear"] figure,
+body[data-glass-mode="clear"] .backend-card {
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 10%), hsl(0 0% 100% / 0.64), transparent 30%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.34), hsl(38 46% 96% / 0.1) 50%, hsl(214 38% 16% / 0.03)) !important;
+  border-color: hsl(0 0% 100% / 0.62) !important;
+}
+
+body[data-glass-mode="clear"] #why .group {
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 10%), hsl(0 0% 100% / 0.28), transparent 30%),
+    linear-gradient(135deg, hsl(38 46% 94% / 0.16), hsl(38 46% 94% / 0.04) 52%, hsl(214 38% 16% / 0.18)) !important;
+}
+
+body[data-glass-mode="clear"] .backend-field input,
+body[data-glass-mode="clear"] .backend-field select,
+body[data-glass-mode="clear"] .backend-field textarea {
+  background:
+    radial-gradient(circle at var(--glass-x, 70%) var(--glass-y, 0%), hsl(0 0% 100% / 0.54), transparent 35%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.4), hsl(38 48% 97% / 0.16));
+  border-color: hsl(0 0% 100% / 0.64);
+}
+
+body[data-glass-mode="clear"] .glass-mode-option[data-active="true"] {
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 12%), hsl(0 0% 100% / 0.42), transparent 34%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.24), hsl(214 38% 16% / 0.22));
+}
+
 @media (prefers-reduced-motion: reduce) {
   header a[href="/reserve"],
   main section a.rounded-full,
   main section button.rounded-full,
+  .glass-mode-switch,
+  .glass-mode-option,
   article,
   figure,
   #why .group,
@@ -652,6 +794,7 @@ header nav a[href="/takeaway"] {
   footer a[href="/takeaway"],
   footer a[aria-label="Social link"],
   .backend-submit,
+  .glass-mode-switch,
   .backend-card,
   article,
   figure,
@@ -674,6 +817,12 @@ header nav a[href="/takeaway"] {
 }
 
 @media (max-width: 767px) {
+  .glass-mode-switch {
+    right: 50%;
+    bottom: max(0.8rem, env(safe-area-inset-bottom));
+    transform: translateX(50%);
+  }
+
   header {
     top: 0.55rem !important;
     right: 0.55rem !important;
