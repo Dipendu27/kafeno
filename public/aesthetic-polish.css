@@ -24,6 +24,12 @@
   --gradient-soft: linear-gradient(180deg, hsl(38 48% 97%) 0%, hsl(38 36% 92%) 100%);
   --shadow-soft: 0 18px 44px -32px hsl(214 38% 16% / 0.34);
   --shadow-elegant: 0 36px 80px -42px hsl(21 45% 20% / 0.38);
+  --glass-light: linear-gradient(135deg, hsl(0 0% 100% / 0.5), hsl(38 46% 96% / 0.18) 48%, hsl(38 46% 96% / 0.08));
+  --glass-dark: linear-gradient(135deg, hsl(38 46% 94% / 0.18), hsl(38 46% 94% / 0.06) 52%, hsl(21 45% 20% / 0.18));
+  --glass-border-light: hsl(0 0% 100% / 0.52);
+  --glass-border-dark: hsl(38 46% 94% / 0.26);
+  --glass-blur: blur(24px) saturate(1.24);
+  --glass-shadow: 0 26px 72px -44px hsl(214 38% 16% / 0.64), inset 0 1px 0 hsl(0 0% 100% / 0.52);
 }
 
 html {
@@ -83,8 +89,14 @@ textarea,
 }
 
 header {
-  backdrop-filter: blur(18px) saturate(1.08);
-  -webkit-backdrop-filter: blur(18px) saturate(1.08);
+  background:
+    linear-gradient(135deg, hsl(214 38% 16% / 0.54), hsl(214 38% 16% / 0.34) 48%, hsl(21 45% 20% / 0.38)) !important;
+  border-bottom: 1px solid hsl(var(--cream) / 0.2);
+  box-shadow: 0 24px 70px -42px hsl(214 38% 16% / 0.78), inset 0 1px 0 hsl(0 0% 100% / 0.18);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 header::after {
@@ -99,12 +111,40 @@ header::after {
 }
 
 header nav a {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: hsl(var(--cream) / 0.88) !important;
   font-size: 0.94rem;
   font-weight: 500;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color 220ms ease,
+    text-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+header nav a::selection,
+header ::selection {
+  background: transparent;
+  color: inherit;
+}
+
+header nav a:active,
+header nav a:focus {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+header nav a:focus-visible {
+  border-radius: 999px;
+  outline: 1px solid hsl(var(--cream) / 0.62);
+  outline-offset: 0.38rem;
 }
 
 header nav a:hover {
   color: hsl(28 47% 68%) !important;
+  text-shadow: 0 0 22px hsl(38 46% 94% / 0.38);
 }
 
 #top h1,
@@ -132,16 +172,64 @@ section:first-of-type p {
 }
 
 .bg-card,
-.backend-card {
-  background-color: hsl(38 52% 98% / 0.9) !important;
+.backend-card,
+[class*="bg-card/"] {
+  background: var(--glass-light) !important;
+  border-color: var(--glass-border-light) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
 article,
 figure,
 #why .group,
 .backend-card {
-  border-color: hsl(35 25% 80% / 0.78) !important;
-  box-shadow: var(--shadow-soft) !important;
+  border-color: var(--glass-border-light) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+article,
+figure,
+#why .group,
+.backend-card,
+#gallery .group.relative,
+#visit .relative.overflow-hidden {
+  position: relative;
+  overflow: hidden;
+}
+
+article::before,
+figure::before,
+#why .group::before,
+.backend-card::before,
+#gallery .group.relative::before,
+#visit .relative.overflow-hidden::before {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    linear-gradient(135deg, hsl(0 0% 100% / 0.38), transparent 34%),
+    linear-gradient(315deg, hsl(38 46% 94% / 0.16), transparent 42%);
+  content: "";
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+article > *,
+figure > *,
+#why .group > *,
+.backend-card > *,
+#gallery .group.relative > *,
+#visit .relative.overflow-hidden > * {
+  position: relative;
+  z-index: 2;
+}
+
+#why .group {
+  background: var(--glass-dark) !important;
+  border-color: var(--glass-border-dark) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
 article,
@@ -158,7 +246,7 @@ article:hover,
 figure:hover,
 #why .group:hover {
   border-color: hsl(28 47% 34% / 0.26) !important;
-  box-shadow: var(--shadow-elegant) !important;
+  box-shadow: 0 32px 86px -48px hsl(21 45% 20% / 0.58), inset 0 1px 0 hsl(0 0% 100% / 0.64) !important;
 }
 
 article img,
@@ -185,13 +273,19 @@ figure img,
 a[href="/reserve"],
 a[href="/takeaway"],
 .backend-submit {
-  background-color: hsl(21 45% 20%) !important;
+  background:
+    linear-gradient(135deg, hsl(28 47% 34% / 0.82), hsl(21 45% 20% / 0.92)),
+    hsl(21 45% 20%) !important;
+  color: hsl(var(--cream)) !important;
 }
 
 a[href="/reserve"],
 a[href="/takeaway"],
 .backend-submit {
+  border: 1px solid hsl(var(--cream) / 0.2);
   box-shadow: 0 18px 36px -24px hsl(21 45% 20% / 0.76);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   transition:
     transform 220ms ease,
     box-shadow 220ms ease,
@@ -202,9 +296,62 @@ a[href="/takeaway"],
 a[href="/reserve"]:hover,
 a[href="/takeaway"]:hover,
 .backend-submit:hover {
-  background-color: hsl(28 47% 30%) !important;
+  background:
+    linear-gradient(135deg, hsl(28 47% 42% / 0.9), hsl(21 45% 24% / 0.94)),
+    hsl(28 47% 30%) !important;
+  color: hsl(var(--cream)) !important;
   box-shadow: 0 22px 40px -24px hsl(21 45% 20% / 0.86);
   transform: translateY(-1px);
+}
+
+header nav a[href="/takeaway"] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: hsl(var(--cream) / 0.88) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+header nav a[href="/takeaway"]:hover {
+  background: transparent !important;
+  color: hsl(28 47% 68%) !important;
+  transform: none;
+}
+
+header a[href="/reserve"] {
+  background: var(--glass-dark) !important;
+  border: 1px solid hsl(var(--cream) / 0.42) !important;
+  color: hsl(var(--cream)) !important;
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.22), 0 18px 42px -30px hsl(0 0% 0% / 0.7) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+header a[href="/reserve"]:hover {
+  background: linear-gradient(135deg, hsl(var(--cream) / 0.92), hsl(var(--cream) / 0.72)) !important;
+  color: hsl(var(--navy)) !important;
+  transform: translateY(-1px);
+}
+
+main section a.rounded-full,
+main section button.rounded-full {
+  background:
+    linear-gradient(135deg, hsl(214 38% 16% / 0.78), hsl(21 45% 20% / 0.72)),
+    hsl(var(--navy)) !important;
+  border: 1px solid hsl(var(--cream) / 0.26) !important;
+  color: hsl(var(--cream)) !important;
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.24), 0 20px 48px -30px hsl(214 38% 16% / 0.72) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+main section a.rounded-full:hover,
+main section button.rounded-full:hover {
+  background:
+    linear-gradient(135deg, hsl(38 46% 94% / 0.24), hsl(21 45% 20% / 0.62)),
+    hsl(21 45% 20%) !important;
+  color: hsl(var(--cream)) !important;
 }
 
 .backend-form-section {
@@ -242,9 +389,11 @@ a[href="/takeaway"]:hover,
 .backend-field input,
 .backend-field select,
 .backend-field textarea {
-  background-color: hsl(38 48% 97% / 0.86);
-  border-color: hsl(35 25% 78%);
+  background: linear-gradient(135deg, hsl(0 0% 100% / 0.58), hsl(38 48% 97% / 0.32));
+  border-color: hsl(0 0% 100% / 0.56);
   box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.7);
+  backdrop-filter: blur(18px) saturate(1.18);
+  -webkit-backdrop-filter: blur(18px) saturate(1.18);
 }
 
 .backend-field input:focus,
@@ -260,6 +409,24 @@ footer {
   background-image:
     linear-gradient(180deg, hsl(214 38% 16%) 0%, hsl(214 40% 12%) 100%),
     repeating-linear-gradient(90deg, hsl(38 46% 94% / 0.035) 0 1px, transparent 1px 22px);
+}
+
+footer a[href="/reserve"],
+footer a[href="/takeaway"],
+footer a[aria-label="Social link"] {
+  background: var(--glass-dark) !important;
+  border-color: hsl(var(--cream) / 0.36) !important;
+  color: hsl(var(--cream)) !important;
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.22), 0 18px 42px -28px hsl(0 0% 0% / 0.72);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+footer a[href="/reserve"]:hover,
+footer a[href="/takeaway"]:hover,
+footer a[aria-label="Social link"]:hover {
+  background: linear-gradient(135deg, hsl(38 46% 94% / 0.28), hsl(28 47% 34% / 0.3)) !important;
+  color: hsl(var(--cream)) !important;
 }
 
 @media (max-width: 767px) {
