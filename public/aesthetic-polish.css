@@ -1,0 +1,273 @@
+:root {
+  --cream: 38 46% 94%;
+  --navy: 214 38% 16%;
+  --muted-blue: 188 18% 31%;
+  --rustic-brown: 21 45% 20%;
+  --background: 38 46% 94%;
+  --foreground: 214 38% 16%;
+  --card: 38 52% 98%;
+  --card-foreground: 214 38% 16%;
+  --popover: 38 52% 98%;
+  --popover-foreground: 214 38% 16%;
+  --primary: 21 45% 20%;
+  --primary-foreground: 39 48% 96%;
+  --secondary: 188 18% 31%;
+  --secondary-foreground: 39 48% 96%;
+  --muted: 38 30% 89%;
+  --muted-foreground: 212 20% 31%;
+  --accent: 28 47% 34%;
+  --accent-foreground: 39 48% 96%;
+  --border: 35 25% 80%;
+  --input: 35 25% 80%;
+  --ring: 28 47% 34%;
+  --gradient-hero: linear-gradient(135deg, hsl(214 38% 16% / 0.64) 0%, hsl(21 45% 20% / 0.44) 54%, hsl(188 18% 31% / 0.46) 100%);
+  --gradient-soft: linear-gradient(180deg, hsl(38 48% 97%) 0%, hsl(38 36% 92%) 100%);
+  --shadow-soft: 0 18px 44px -32px hsl(214 38% 16% / 0.34);
+  --shadow-elegant: 0 36px 80px -42px hsl(21 45% 20% / 0.38);
+}
+
+html {
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: hsl(var(--background));
+  background-image:
+    linear-gradient(180deg, hsl(38 48% 97%) 0%, hsl(38 38% 92%) 48%, hsl(38 34% 90%) 100%),
+    repeating-linear-gradient(90deg, hsl(21 45% 20% / 0.025) 0 1px, transparent 1px 18px);
+  color: hsl(var(--foreground));
+  font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+body,
+button,
+input,
+select,
+textarea,
+[class*="tracking-"] {
+  letter-spacing: 0 !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display,
+.backend-form-copy h1,
+.backend-card h2 {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 500;
+  letter-spacing: 0 !important;
+}
+
+.font-body,
+.eyebrow,
+nav a,
+button,
+input,
+select,
+textarea,
+.backend-back-link,
+.backend-eyebrow,
+.backend-field span,
+.backend-help,
+.backend-status {
+  font-family: "Manrope", system-ui, sans-serif !important;
+}
+
+::selection {
+  background: hsl(var(--rustic-brown) / 0.88);
+  color: hsl(var(--cream));
+}
+
+header {
+  backdrop-filter: blur(18px) saturate(1.08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.08);
+}
+
+header::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--cream) / 0.28), transparent);
+  content: "";
+  pointer-events: none;
+}
+
+header nav a {
+  font-size: 0.94rem;
+  font-weight: 500;
+}
+
+header nav a:hover {
+  color: hsl(28 47% 68%) !important;
+}
+
+#top h1,
+section:first-of-type h1 {
+  text-shadow: 0 18px 54px hsl(214 38% 16% / 0.34);
+}
+
+#top p,
+section:first-of-type p {
+  font-weight: 500;
+}
+
+.bg-cream {
+  background-color: hsl(var(--cream)) !important;
+}
+
+.bg-gradient-soft {
+  background-image:
+    linear-gradient(180deg, hsl(38 48% 97%) 0%, hsl(38 36% 92%) 100%),
+    repeating-linear-gradient(90deg, hsl(188 18% 31% / 0.026) 0 1px, transparent 1px 20px) !important;
+}
+
+.bg-navy {
+  background-color: hsl(var(--navy)) !important;
+}
+
+.bg-card,
+.backend-card {
+  background-color: hsl(38 52% 98% / 0.9) !important;
+}
+
+article,
+figure,
+#why .group,
+.backend-card {
+  border-color: hsl(35 25% 80% / 0.78) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+article,
+figure,
+#why .group {
+  transition:
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+article:hover,
+figure:hover,
+#why .group:hover {
+  border-color: hsl(28 47% 34% / 0.26) !important;
+  box-shadow: var(--shadow-elegant) !important;
+}
+
+article img,
+figure img,
+#about img,
+#gallery img {
+  filter: saturate(1.04) contrast(1.02);
+}
+
+.eyebrow,
+.backend-eyebrow,
+.backend-back-link,
+.backend-field span,
+.backend-help {
+  color: hsl(var(--secondary) / 0.86) !important;
+  font-weight: 700;
+}
+
+.text-rustic-brown {
+  color: hsl(28 47% 34%) !important;
+}
+
+.bg-rustic-brown,
+a[href="/reserve"],
+a[href="/takeaway"],
+.backend-submit {
+  background-color: hsl(21 45% 20%) !important;
+}
+
+a[href="/reserve"],
+a[href="/takeaway"],
+.backend-submit {
+  box-shadow: 0 18px 36px -24px hsl(21 45% 20% / 0.76);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease;
+}
+
+a[href="/reserve"]:hover,
+a[href="/takeaway"]:hover,
+.backend-submit:hover {
+  background-color: hsl(28 47% 30%) !important;
+  box-shadow: 0 22px 40px -24px hsl(21 45% 20% / 0.86);
+  transform: translateY(-1px);
+}
+
+.backend-form-section {
+  background:
+    linear-gradient(140deg, hsl(38 48% 97%) 0%, hsl(38 36% 92%) 54%, hsl(188 18% 31% / 0.16) 100%),
+    repeating-linear-gradient(90deg, hsl(21 45% 20% / 0.025) 0 1px, transparent 1px 20px) !important;
+}
+
+.backend-form-copy h1 {
+  color: hsl(var(--navy));
+  font-size: clamp(3rem, 7.4vw, 5.65rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.backend-form-copy em {
+  color: hsl(28 47% 34%);
+}
+
+.backend-form-copy p,
+.backend-contact-strip,
+.backend-status {
+  color: hsl(var(--muted-foreground));
+}
+
+.backend-card {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.backend-card h2 {
+  font-weight: 500;
+}
+
+.backend-field input,
+.backend-field select,
+.backend-field textarea {
+  background-color: hsl(38 48% 97% / 0.86);
+  border-color: hsl(35 25% 78%);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.7);
+}
+
+.backend-field input:focus,
+.backend-field select:focus,
+.backend-field textarea:focus {
+  border-color: hsl(28 47% 34% / 0.48);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.9),
+    0 0 0 4px hsl(28 47% 34% / 0.1);
+}
+
+footer {
+  background-image:
+    linear-gradient(180deg, hsl(214 38% 16%) 0%, hsl(214 40% 12%) 100%),
+    repeating-linear-gradient(90deg, hsl(38 46% 94% / 0.035) 0 1px, transparent 1px 22px);
+}
+
+@media (max-width: 767px) {
+  header nav a {
+    font-size: 0.9rem;
+  }
+
+  .backend-form-section {
+    padding-top: 7rem;
+  }
+}
