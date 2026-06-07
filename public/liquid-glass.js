@@ -1,7 +1,6 @@
 (function () {
   const root = document.documentElement;
   const modeStorageKey = 'kafenoGlassMode';
-  const modes = new Set(['clear', 'tinted']);
   const glassTargets = [
     'header',
     'header a[href="/reserve"]',
@@ -26,75 +25,24 @@
     'footer a[href="/reserve"]',
     'footer a[href="/takeaway"]',
     'footer a[aria-label="Social link"]',
-    '.glass-mode-switch',
-    '.glass-mode-option',
   ].join(',');
 
   let frame = 0;
   let activeElement = null;
-  let modeSwitch = null;
-
-  const readMode = () => {
-    try {
-      const storedMode = window.localStorage.getItem(modeStorageKey);
-      return modes.has(storedMode) ? storedMode : 'tinted';
-    } catch (_error) {
-      return 'tinted';
-    }
-  };
-
-  const persistMode = (mode) => {
-    try {
-      window.localStorage.setItem(modeStorageKey, mode);
-    } catch (_error) {
-      // Storage can be unavailable in private or restricted browsing.
-    }
-  };
-
-  const updateModeSwitch = (mode) => {
-    if (!modeSwitch) return;
-
-    for (const option of modeSwitch.querySelectorAll('.glass-mode-option')) {
-      const isActive = option.dataset.glassModeOption === mode;
-      option.setAttribute('aria-checked', String(isActive));
-      option.dataset.active = String(isActive);
-    }
-  };
-
-  const applyMode = (mode, shouldPersist) => {
-    const nextMode = modes.has(mode) ? mode : 'tinted';
-    document.body.dataset.glassMode = nextMode;
-    root.dataset.glassMode = nextMode;
-    updateModeSwitch(nextMode);
-
-    if (shouldPersist) persistMode(nextMode);
-  };
 
   const updateScrolledState = () => {
     document.body.dataset.glassScrolled = window.scrollY > 18 ? 'true' : 'false';
   };
 
-  const createModeSwitch = () => {
-    if (modeSwitch || document.querySelector('.glass-mode-switch')) return;
+  const forceTintedMode = () => {
+    document.body.dataset.glassMode = 'tinted';
+    root.dataset.glassMode = 'tinted';
 
-    modeSwitch = document.createElement('div');
-    modeSwitch.className = 'glass-mode-switch';
-    modeSwitch.setAttribute('role', 'radiogroup');
-    modeSwitch.setAttribute('aria-label', 'Liquid glass appearance');
-
-    for (const mode of ['clear', 'tinted']) {
-      const option = document.createElement('button');
-      option.type = 'button';
-      option.className = 'glass-mode-option';
-      option.dataset.glassModeOption = mode;
-      option.setAttribute('role', 'radio');
-      option.textContent = mode === 'clear' ? 'Clear' : 'Tinted';
-      option.addEventListener('click', () => applyMode(mode, true));
-      modeSwitch.appendChild(option);
+    try {
+      window.localStorage.removeItem(modeStorageKey);
+    } catch (_error) {
+      // Storage can be unavailable in private or restricted browsing.
     }
-
-    document.body.appendChild(modeSwitch);
-    updateModeSwitch(document.body.dataset.glassMode || readMode());
   };
 
   const setPointerLight = (event) => {
@@ -131,15 +79,69 @@
     activeElement = null;
   };
 
+  const samePath = (path) => (path.replace(/\/+$/, '') || '/') === '/';
+
+  const scrollHomeTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    if (location.hash) history.replaceState(null, '', '/');
+  };
+
+  const goHomeWithTransition = () => {
+    document.body.dataset.homeTransition = 'out';
+    window.setTimeout(() => {
+      window.location.assign('/');
+    }, 180);
+  };
+
+  const findBrandLink = () => {
+    const links = Array.from(document.querySelectorAll('header a[href]'));
+    return (
+      links.find((link) => link.querySelector('img') && link.textContent.includes('Kafeno')) ||
+      links.find((link) => link.getAttribute('href') === '#top') ||
+      null
+    );
+  };
+
+  const prepareBrandHomeLink = () => {
+    const brandLink = findBrandLink();
+    if (!brandLink || brandLink.dataset.homeLinkReady === 'true') return;
+
+    brandLink.dataset.homeLinkReady = 'true';
+    brandLink.setAttribute('href', '/');
+    brandLink.setAttribute('aria-label', 'Go to Kafeno home');
+
+    brandLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (typeof event.stopImmediatePropagation === 'function') {
+        event.stopImmediatePropagation();
+      }
+
+      if (samePath(location.pathname)) {
+        scrollHomeTop();
+        return;
+      }
+
+      goHomeWithTransition();
+    });
+  };
+
+  const observeHeader = () => {
+    prepareBrandHomeLink();
+
+    const observer = new MutationObserver(prepareBrandHomeLink);
+    observer.observe(document.body, { childList: true, subtree: true });
+  };
+
   document.addEventListener('pointermove', setPointerLight, { passive: true });
   document.addEventListener('pointerleave', clearActive, true);
   window.addEventListener('scroll', updateScrolledState, { passive: true });
   window.addEventListener('DOMContentLoaded', () => {
-    applyMode(readMode(), false);
-    createModeSwitch();
+    forceTintedMode();
+    observeHeader();
     updateScrolledState();
   });
 
-  applyMode(readMode(), false);
+  forceTintedMode();
   updateScrolledState();
 })();
