@@ -770,6 +770,276 @@ body[data-glass-mode="clear"] .glass-mode-option[data-active="true"] {
     linear-gradient(135deg, hsl(0 0% 100% / 0.24), hsl(214 38% 16% / 0.22));
 }
 
+.backend-form-section {
+  min-height: 100svh;
+  isolation: isolate;
+  padding: clamp(7.5rem, 10vw, 9.5rem) clamp(1rem, 4vw, 3rem) clamp(4rem, 7vw, 6rem) !important;
+  background:
+    radial-gradient(circle at 82% 12%, hsl(0 0% 100% / 0.46), transparent 28rem),
+    radial-gradient(circle at 12% 82%, hsl(188 18% 31% / 0.18), transparent 26rem),
+    linear-gradient(135deg, hsl(38 48% 97%) 0%, hsl(38 34% 91%) 50%, hsl(21 45% 20% / 0.1) 100%) !important;
+}
+
+.backend-form-section::before,
+.backend-form-section::after {
+  position: absolute;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.backend-form-section::before {
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 0 34%, hsl(0 0% 100% / 0.34) 45%, transparent 58%),
+    repeating-linear-gradient(90deg, hsl(214 38% 16% / 0.025) 0 1px, transparent 1px 24px);
+  opacity: 0.72;
+}
+
+.backend-form-section::after {
+  right: clamp(-10rem, -10vw, -4rem);
+  top: clamp(3rem, 8vw, 7rem);
+  width: min(42vw, 34rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, hsl(38 46% 94% / 0.46), hsl(188 18% 31% / 0.12) 42%, transparent 70%);
+  filter: blur(18px);
+}
+
+.backend-form-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1280px, 100%);
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.backend-form-copy,
+.backend-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--ios-glass-edge);
+  border-radius: clamp(1.65rem, 3vw, 2.35rem);
+  background:
+    radial-gradient(circle at var(--glass-x, 78%) var(--glass-y, 14%), hsl(0 0% 100% / 0.58), transparent 30%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.38), hsl(38 46% 96% / 0.16) 52%, hsl(214 38% 16% / 0.05)) !important;
+  box-shadow: var(--ios-glass-shadow) !important;
+  backdrop-filter: var(--ios-glass-blur);
+  -webkit-backdrop-filter: var(--ios-glass-blur);
+}
+
+.backend-form-copy {
+  padding: clamp(1.35rem, 4vw, 2.8rem);
+}
+
+.backend-form-copy::before,
+.backend-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(135deg, hsl(0 0% 100% / 0.36), transparent 32%),
+    radial-gradient(ellipse at var(--glass-x, 78%) var(--glass-y, 14%), hsl(0 0% 100% / 0.22), transparent 42%);
+  content: "";
+  pointer-events: none;
+}
+
+.backend-form-copy::after,
+.backend-card::after {
+  position: absolute;
+  inset: 1px;
+  z-index: 1;
+  border: 1px solid hsl(0 0% 100% / 0.3);
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+.backend-form-copy > *,
+.backend-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.backend-back-link,
+.backend-contact-strip,
+.backend-actions,
+.backend-help {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid hsl(0 0% 100% / 0.38);
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 12%), hsl(0 0% 100% / 0.38), transparent 34%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.22), hsl(38 46% 94% / 0.1));
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.44), 0 18px 48px -36px hsl(214 38% 16% / 0.62);
+  backdrop-filter: var(--ios-glass-blur);
+  -webkit-backdrop-filter: var(--ios-glass-blur);
+}
+
+.backend-back-link {
+  min-height: 2.65rem;
+  padding-inline: 1.2rem;
+  color: hsl(var(--secondary)) !important;
+}
+
+.backend-contact-strip {
+  border-radius: 1.3rem;
+  padding: 1rem 1.15rem;
+}
+
+.backend-actions {
+  border-radius: 1.3rem;
+  padding: 0.8rem;
+}
+
+.backend-help {
+  border-radius: 1.1rem;
+  padding: 0.85rem 1rem;
+  text-transform: none;
+}
+
+.backend-form-copy h1 {
+  text-shadow: 0 18px 54px hsl(214 38% 16% / 0.1);
+}
+
+.backend-card h2 {
+  font-size: clamp(2.35rem, 4vw, 3.45rem);
+  line-height: 1;
+}
+
+.backend-form-grid {
+  gap: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+.backend-field {
+  position: relative;
+}
+
+.backend-field span {
+  padding-left: 0.1rem;
+}
+
+.backend-field input,
+.backend-field select,
+.backend-field textarea {
+  min-height: 3.6rem;
+  border-radius: 1.15rem;
+  background:
+    radial-gradient(circle at var(--glass-x, 70%) var(--glass-y, 0%), hsl(0 0% 100% / 0.56), transparent 35%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.48), hsl(38 48% 97% / 0.18)) !important;
+  border-color: hsl(0 0% 100% / 0.62) !important;
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.72),
+    inset 0 -1px 0 hsl(214 38% 16% / 0.08),
+    0 16px 40px -34px hsl(214 38% 16% / 0.54);
+  backdrop-filter: blur(26px) saturate(1.36);
+  -webkit-backdrop-filter: blur(26px) saturate(1.36);
+}
+
+.backend-field textarea {
+  min-height: 9.5rem;
+}
+
+.backend-field input:focus,
+.backend-field select:focus,
+.backend-field textarea:focus {
+  border-color: hsl(0 0% 100% / 0.82) !important;
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.82),
+    0 0 0 4px hsl(214 38% 16% / 0.08),
+    0 22px 58px -42px hsl(214 38% 16% / 0.56);
+}
+
+.backend-field input::placeholder,
+.backend-field textarea::placeholder {
+  color: hsl(214 12% 48% / 0.58);
+}
+
+body[data-glass-mode="clear"] .backend-form-section {
+  background:
+    radial-gradient(circle at 82% 12%, hsl(0 0% 100% / 0.56), transparent 28rem),
+    radial-gradient(circle at 12% 82%, hsl(188 18% 31% / 0.12), transparent 26rem),
+    linear-gradient(135deg, hsl(38 48% 97%) 0%, hsl(38 34% 92%) 50%, hsl(214 38% 16% / 0.05) 100%) !important;
+}
+
+body[data-glass-mode="clear"] .backend-form-copy,
+body[data-glass-mode="clear"] .backend-card {
+  background:
+    radial-gradient(circle at var(--glass-x, 78%) var(--glass-y, 14%), hsl(0 0% 100% / 0.66), transparent 30%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.3), hsl(38 46% 96% / 0.08) 52%, hsl(214 38% 16% / 0.03)) !important;
+  border-color: hsl(0 0% 100% / 0.64);
+}
+
+body[data-glass-mode="clear"] .backend-back-link,
+body[data-glass-mode="clear"] .backend-contact-strip,
+body[data-glass-mode="clear"] .backend-actions,
+body[data-glass-mode="clear"] .backend-help {
+  background:
+    radial-gradient(circle at var(--glass-x, 72%) var(--glass-y, 12%), hsl(0 0% 100% / 0.5), transparent 34%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.2), hsl(38 46% 94% / 0.04));
+  border-color: hsl(0 0% 100% / 0.58);
+}
+
+body[data-glass-mode="clear"] .backend-field input,
+body[data-glass-mode="clear"] .backend-field select,
+body[data-glass-mode="clear"] .backend-field textarea {
+  background:
+    radial-gradient(circle at var(--glass-x, 70%) var(--glass-y, 0%), hsl(0 0% 100% / 0.64), transparent 35%),
+    linear-gradient(135deg, hsl(0 0% 100% / 0.38), hsl(38 48% 97% / 0.12)) !important;
+  border-color: hsl(0 0% 100% / 0.72) !important;
+}
+
+body:has(.backend-form-section) .glass-mode-switch {
+  top: max(6.25rem, calc(env(safe-area-inset-top) + 5.5rem));
+  right: auto;
+  bottom: auto;
+  left: max(1rem, env(safe-area-inset-left));
+}
+
+@media (max-width: 860px) {
+  .backend-form-section {
+    padding: 7.5rem 1rem 5rem !important;
+  }
+
+  .backend-form-shell {
+    width: min(720px, 100%);
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .backend-form-copy,
+  .backend-card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 620px) {
+  .backend-form-section {
+    padding-inline: 0.85rem !important;
+  }
+
+  .backend-form-copy,
+  .backend-card {
+    border-radius: 1.45rem;
+    padding: 1.15rem;
+  }
+
+  .backend-card h2 {
+    font-size: clamp(2.1rem, 12vw, 2.85rem);
+  }
+
+  .backend-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .backend-contact-strip,
+  .backend-actions,
+  .backend-help {
+    border-radius: 1rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   header a[href="/reserve"],
   main section a.rounded-full,
@@ -795,6 +1065,14 @@ body[data-glass-mode="clear"] .glass-mode-option[data-active="true"] {
   footer a[aria-label="Social link"],
   .backend-submit,
   .glass-mode-switch,
+  .backend-form-copy,
+  .backend-back-link,
+  .backend-contact-strip,
+  .backend-actions,
+  .backend-help,
+  .backend-field input,
+  .backend-field select,
+  .backend-field textarea,
   .backend-card,
   article,
   figure,
@@ -820,6 +1098,14 @@ body[data-glass-mode="clear"] .glass-mode-option[data-active="true"] {
   .glass-mode-switch {
     right: 50%;
     bottom: max(0.8rem, env(safe-area-inset-bottom));
+    transform: translateX(50%);
+  }
+
+  body:has(.backend-form-section) .glass-mode-switch {
+    top: 5.25rem;
+    right: 50%;
+    bottom: auto;
+    left: auto;
     transform: translateX(50%);
   }
 
